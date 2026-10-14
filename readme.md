@@ -36,20 +36,127 @@
 
 ---
 
-## 🛠 Технологии
+## 🏗 Архитектура приложения
 
-| Технология | Назначение |
-|------------|------------|
-| HTML5 | Структура страниц и шаблоны контента |
-| CSS3 | Стилизация, анимации (`@keyframes`), адаптивность (media queries) |
-| JavaScript (ES6) | SPA-навигация, рендеринг страниц, обработка формы |
-| Font Awesome 6 | Иконки |
+```mermaid
+graph TB
+    User([👤 Пользователь])
 
-**Без зависимостей и сборки** — достаточно открыть `index.html` в браузере.
+    subgraph Browser["🌐 Браузер"]
+        Header["📍 Header<br/>логотип + навигация"]
+        Nav["🔗 Nav<br/>5 ссылок"]
+        Main["📦 main#app<br/>контейнер контента"]
+        Footer["🦶 Footer"]
+        JS["⚙️ JavaScript<br/>pages + renderPage()"]
+    end
+
+    subgraph Pages["📄 Объект pages"]
+        P1["🏠 home"]
+        P2["🏭 about"]
+        P3["🍪 products"]
+        P4["📞 contacts"]
+        P5["✉️ feedback"]
+    end
+
+    subgraph Assets["🎨 Внешние ресурсы"]
+        FA["Font Awesome CDN"]
+        CSS["CSS-анимации<br/>@keyframes"]
+    end
+
+    User -->|клик по ссылке| Nav
+    Nav -->|data-page| JS
+    JS -->|читает| Pages
+    Pages -->|HTML-шаблон| Main
+    Main -->|рендерит| User
+    Header --> User
+    Footer --> User
+    FA --> Header
+    FA --> Main
+    CSS --> Main
+    CSS --> Header
+
+    style User fill:#fbe9d2,stroke:#8b4513,stroke-width:2px
+    style JS fill:#f9d9a7,stroke:#8b4513,stroke-width:2px
+    style Main fill:#fffbf2,stroke:#b87c4b,stroke-width:2px
+    style Pages fill:#f5e5d3,stroke:#8b4513,stroke-width:2px
+```
+
+---
+
+## 🔄 Схема навигации (SPA)
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as 👤 Пользователь
+    participant N as 🔗 Nav
+    participant R as ⚙️ renderPage()
+    participant P as 📄 pages{}
+    participant M as 📦 main#app
+
+    U->>N: Клик по ссылке «Продукция»
+    N->>R: renderPage('products')
+    R->>P: Получить content для products
+    P-->>R: HTML-шаблон
+    R->>M: innerHTML = content
+    R->>R: Обновить document.title
+    R->>N: Подсветить активную ссылку
+    R->>R: Навесить обработчики [data-page]
+    M-->>U: Отобразить страницу
+    Note over R,M: Перезагрузки страницы нет ✨
+```
+
+---
+
+## 🧠 Логика работы формы обратной связи
+
+```mermaid
+flowchart TD
+    Start([Пользователь открыл<br/>страницу feedback]) --> Init[initFeedbackForm]
+    Init --> Fill[Заполняет поля формы]
+    Fill --> Submit{Нажата кнопка<br/>«Отправить»}
+
+    Submit -->|Нет| Fill
+    Submit -->|Да| Validate{Валидация}
+
+    Validate -->|Имя пустое| Err1[❌ Alert: заполните поля]
+    Validate -->|Email пустой| Err1
+    Validate -->|Сообщение пустое| Err1
+    Validate -->|Email без @ или .| Err2[❌ Alert: некорректный email]
+
+    Err1 --> Fill
+    Err2 --> Fill
+
+    Validate -->|Всё ок| Success[✅ Показать success-message]
+    Success --> Reset[Очистить форму]
+    Reset --> Timer[⏱ Таймер 5 сек]
+    Timer --> Hide[Скрыть сообщение]
+    Hide --> End([Готово])
+
+    style Start fill:#fbe9d2,stroke:#8b4513,stroke-width:2px
+    style Success fill:#d4edda,stroke:#155724,stroke-width:2px
+    style Err1 fill:#f8d7da,stroke:#721c24,stroke-width:2px
+    style Err2 fill:#f8d7da,stroke:#721c24,stroke-width:2px
+    style End fill:#f9d9a7,stroke:#8b4513,stroke-width:2px
+```
 
 ---
 
 ## 📂 Структура проекта
+
+```mermaid
+graph LR
+    Root["📁 ubileynoe-factory/"]
+    Root --> Index["📄 index.html<br/><i>разметка + стили + скрипты</i>"]
+    Root --> Readme["📝 README.md"]
+    Root --> Git["📁 .github/<br/><i>(опционально)</i>"]
+    Git --> WF["⚙️ workflows/<br/>deploy.yml"]
+
+    style Root fill:#8b4513,color:#fff5e6,stroke:#3e2c1b,stroke-width:2px
+    style Index fill:#fbe9d2,stroke:#8b4513,stroke-width:2px
+    style Readme fill:#f5e5d3,stroke:#b87c4b,stroke-width:2px
+    style Git fill:#f0dcc5,stroke:#b87c4b,stroke-width:2px
+```
 
 ```
 ubileynoe-factory/
@@ -77,10 +184,24 @@ ubileynoe-factory/
 
 ### GitHub Pages
 
+```mermaid
+flowchart LR
+    A[📤 git push] --> B[🐙 GitHub repo]
+    B --> C{⚙️ Settings → Pages}
+    C --> D[Branch: main<br/>Folder: / root]
+    D --> E[🚀 GitHub Pages build]
+    E --> F[🌐 bizzare-stack.github.io/<br/>ubileynoe-factory/]
+
+    style A fill:#fbe9d2,stroke:#8b4513,stroke-width:2px
+    style F fill:#d4edda,stroke:#155724,stroke-width:2px
+```
+
 1. Запушьте проект в репозиторий на GitHub.
 2. Перейдите в **Settings → Pages**.
-3. Выберите ветку `main` и папку `/root`.
+3. Выберите ветку `main` и папку `/ (root)`.
 4. Сохраните — сайт будет доступен по адресу `https://your-username.github.io/ubileynoe-factory/`.
+
+> ⚠️ Файл **обязательно** должен называться `index.html` и лежать в корне — иначе GitHub Pages вернёт 404.
 
 ---
 
