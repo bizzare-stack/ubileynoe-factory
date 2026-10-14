@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Завод «Юбилейное» — Главная</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    }
+
+    body {
+      background: #fef9e9;
+      color: #3e2c1b;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* анимации */
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes slideInLeft {
+      0% { opacity: 0; transform: translateX(-40px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    .fade-up {
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    .scale-in {
+      animation: scaleIn 0.6s ease forwards;
+    }
+
+    .slide-left {
+      animation: slideInLeft 0.7s ease forwards;
+    }
+
+    /* шапка */
+    header {
+      background: #8b4513;
+      color: #fff5e6;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 4px solid #d4a373;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo i {
+      font-size: 2.2rem;
+      color: #f9d9a7;
+      animation: bounce 3s infinite ease-in-out;
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      font-size: 0.9rem;
+      font-weight: 300;
+      display: block;
+      color: #e6c9a8;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #fff5e6;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 0.4rem 0.2rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.3s, color 0.3s, transform 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      border-bottom-color: #f9d9a7;
+      color: #f9d9a7;
+      transform: translateY(-2px);
+    }
+
+    /* основной контент */
+    main {
+      flex: 1;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      width: 100%;
+      animation: fadeUp 0.8s ease;
+    }
+
+    .page-title {
+      font-size: 2.4rem;
+      margin-bottom: 2rem;
+      color: #5e2e0f;
+      border-left: 8px solid #b87c4b;
+      padding-left: 1.2rem;
+      animation: slideInLeft 0.6s ease;
+    }
+
+    /* карточки, блоки */
+    .hero {
+      background: linear-gradient(135deg, #fbe9d2, #f5d7b3);
+      border-radius: 40px;
+      padding: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 10px 30px rgba(139, 69, 19, 0.15);
+    }
+
+    .hero-text {
+      flex: 1 1 300px;
+    }
+
+    .hero-text h2 {
+      font-size: 2.3rem;
+      color: #4a2c14;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text p {
+      font-size: 1.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-img {
+      flex: 1 1 250px;
+      text-align: center;
+      font-size: 7rem;
+      animation: bounce 4s infinite ease-in-out;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #8b4513;
+      color: #fff5e6;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 12px rgba(139, 69, 19, 0.3);
+    }
+
+    .btn:hover {
+      background: #a0522d;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 18px rgba(139, 69, 19, 0.4);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin: 2.5rem 0;
+    }
+
+    .card {
+      background: #fffbf2;
+      border-radius: 30px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: scaleIn 0.5s ease backwards;
+      border: 1px solid #f0d5b0;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+    .card:nth-child(4) { animation-delay: 0.4s; }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 30px rgba(139, 69, 19, 0.15);
+    }
+
+    .card i {
+      font-size: 2.8rem;
+      color: #b87c4b;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      margin-bottom: 0.8rem;
+      color: #5e2e0f;
+    }
+
+    /* формы */
+    .form-container {
+      background: #fffbf2;
+      padding: 2.5rem;
+      border-radius: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border: 1px solid #f0d5b0;
+      max-width: 700px;
+      margin: 2rem auto;
+      animation: fadeUp 0.7s ease;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #4a2c14;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border-radius: 30px;
+      border: 1px solid #d4b28c;
+      background: #fffdf8;
+      font-size: 1rem;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #8b4513;
+      box-shadow: 0 0 0 4px rgba(139, 69, 19, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      font-size: 1.2rem;
+      padding: 1rem;
+      border-radius: 40px;
+    }
+
+    .success-message {
+      background: #d4edda;
+      color: #155724;
+      padding: 1rem;
+      border-radius: 30px;
+      margin-top: 1rem;
+      display: none;
+      animation: fadeUp 0.4s ease;
+    }
+
+    /* галерея / продукция */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .gallery-item {
+      background: #f5e5d3;
+      border-radius: 30px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s;
+      animation: scaleIn 0.5s ease backwards;
+      border: 1px solid #e7cdb0;
+    }
+
+    .gallery-item:nth-child(1) { animation-delay: 0.05s; }
+    .gallery-item:nth-child(2) { animation-delay: 0.15s; }
+    .gallery-item:nth-child(3) { animation-delay: 0.25s; }
+    .gallery-item:nth-child(4) { animation-delay: 0.35s; }
+    .gallery-item:nth-child(5) { animation-delay: 0.45s; }
+    .gallery-item:nth-child(6) { animation-delay: 0.55s; }
+
+    .gallery-item:hover {
+      background: #f0dcc5;
+      transform: scale(1.02);
+    }
+
+    .gallery-item i {
+      font-size: 3rem;
+      color: #8b4513;
+      margin-bottom: 0.5rem;
+    }
+
+    /* подвал */
+    footer {
+      background: #3e2c1b;
+      color: #d9c2a9;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      border-top: 4px solid #b87c4b;
+    }
+
+    footer i {
+      color: #f9d9a7;
+      margin: 0 4px;
+    }
+
+    /* адаптив */
+    @media (max-width: 700px) {
+      header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+      nav {
+        justify-content: center;
+        gap: 1rem;
+      }
+      .hero {
+        padding: 1.8rem;
+      }
+      .hero-text h2 {
+        font-size: 1.8rem;
+      }
+      .page-title {
+        font-size: 1.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <i class="fas fa-cookie-bite"></i>
+      <div>
+        <h1>Юбилейное</h1>
+        <span>завод по производству печенья</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#" class="active" data-page="home">Главная</a>
+      <a href="#" data-page="about">О заводе</a>
+      <a href="#" data-page="products">Продукция</a>
+      <a href="#" data-page="contacts">Контакты</a>
+      <a href="#" data-page="feedback">Обратная связь</a>
+    </nav>
+  </header>
+
+  <main id="app">
+    <!-- сюда рендерится страница -->
+  </main>
+
+  <footer>
+    <p><i class="fas fa-cookie"></i> Завод «Юбилейное» — печенье с историей с 1913 года <i class="fas fa-cookie"></i></p>
+    <p style="margin-top: 0.6rem; font-size: 0.85rem;">© 2025 Все права защищены. Вкус детства.</p>
+  </footer>
+
+  <script>
+    (function() {
+      // Данные страниц
+      const pages = {
+        home: {
+          title: 'Главная',
+          content: `
+            <div class="hero fade-up">
+              <div class="hero-text">
+                <h2>Печенье «Юбилейное» — вкус, проверенный временем</h2>
+                <p>Мы производим легендарное печенье с 1913 года. Натуральные ингредиенты, традиционные рецепты и современное оборудование.</p>
+                <a href="#" class="btn" data-page="products"><i class="fas fa-arrow-right"></i> Смотреть продукцию</a>
+              </div>
+              <div class="hero-img">
+                <i class="fas fa-cookie-bite"></i>
+              </div>
+            </div>
+
+            <h2 class="page-title">Почему выбирают нас</h2>
+            <div class="cards">
+              <div class="card"><i class="fas fa-history"></i><h3>Более 100 лет</h3><p>Легендарный рецепт с 1913 года</p></div>
+              <div class="card"><i class="fas fa-leaf"></i><h3>Натурально</h3><p>Только отборные ингредиенты</p></div>
+              <div class="card"><i class="fas fa-industry"></i><h3>Современный завод</h3><p>Автоматизированные линии</p></div>
+              <div class="card"><i class="fas fa-smile"></i><h3>Любовь покупателей</h3><p>Миллионы счастливых моментов</p></div>
+            </div>
+
+            <div style="margin-top: 3rem; text-align: center;">
+              <a href="#" class="btn" data-page="feedback"><i class="fas fa-envelope"></i> Связаться с нами</a>
+            </div>
+          `
+        },
+        about: {
+          title: 'О заводе',
+          content: `
+            <h2 class="page-title">О заводе «Юбилейное»</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+              <div style="flex: 1 1 300px;">
+                <p style="font-size: 1.15rem; margin-bottom: 1.2rem;">Завод «Юбилейное» — это современное предприятие, которое бережно хранит традиции производства легендарного печенья. Мы начали свою историю в 1913 году и с тех пор стали символом качества и вкуса.</p>
+                <p style="margin-bottom: 1.2rem;">Наша фабрика оснащена автоматизированными линиями, а каждая партия печенья проходит строгий контроль качества. Мы используем только натуральные ингредиенты: отборную пшеничную муку, сливочное масло и натуральные ароматизаторы.</p>
+                <p>Ежегодно мы выпускаем более 50 000 тонн печенья, которое любят в России и за её пределами.</p>
+              </div>
+              <div style="flex: 1 1 250px; text-align: center; font-size: 6rem; background: #f5e5d3; border-radius: 50px; padding: 2rem;">
+                <i class="fas fa-birthday-cake" style="color: #8b4513;"></i>
+              </div>
+            </div>
+
+            <h2 class="page-title" style="margin-top: 3rem;">Наши ценности</h2>
+            <div class="cards">
+              <div class="card"><i class="fas fa-hand-holding-heart"></i><h3>Качество</h3><p>Контроль на каждом этапе</p></div>
+              <div class="card"><i class="fas fa-recycle"></i><h3>Экологичность</h3><p>Заботимся о природе</p></div>
+              <div class="card"><i class="fas fa-users"></i><h3>Команда</h3><p>Более 800 специалистов</p></div>
+            </div>
+          `
+        },
+        products: {
+          title: 'Продукция',
+          content: `
+            <h2 class="page-title">Наша продукция</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.15rem;">Каждый сорт печенья «Юбилейное» создан с любовью и вниманием к деталям.</p>
+            <div class="gallery">
+              <div class="gallery-item"><i class="fas fa-cookie"></i><h3>Классическое</h3><p>Хрустящее, с ванилью</p></div>
+              <div class="gallery-item"><i class="fas fa-cookie-bite"></i><h3>Сливочное</h3><p>Нежное, тающее</p></div>
+              <div class="gallery-item"><i class="fas fa-candy-cane"></i><h3>Шоколадное</h3><p>С какао и кусочками шоколада</p></div>
+              <div class="gallery-item"><i class="fas fa-lemon"></i><h3>Лимонное</h3><p>Освежающий цитрусовый вкус</p></div>
+              <div class="gallery-item"><i class="fas fa-seedling"></i><h3>Овсяное</h3><p>Полезное, с овсяными хлопьями</p></div>
+              <div class="gallery-item"><i class="fas fa-birthday-cake"></i><h3>Юбилейное</h3><p>Легендарный рецепт</p></div>
+            </div>
+            <div style="text-align: center; margin-top: 2.5rem;">
+              <a href="#" class="btn" data-page="contacts"><i class="fas fa-map-marker-alt"></i> Где купить</a>
+            </div>
+          `
+        },
+        contacts: {
+          title: 'Контакты',
+          content: `
+            <h2 class="page-title">Наши контакты</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+              <div class="card" style="text-align: left; padding: 2rem;">
+                <i class="fas fa-map-pin" style="font-size: 2rem;"></i>
+                <h3>Адрес завода</h3>
+                <p>г. Москва, ул. Печенья, д. 15, стр. 3</p>
+              </div>
+              <div class="card" style="text-align: left; padding: 2rem;">
+                <i class="fas fa-phone-alt" style="font-size: 2rem;"></i>
+                <h3>Телефон</h3>
+                <p>+7 (495) 123-45-67<br>+7 (800) 555-35-35</p>
+              </div>
+              <div class="card" style="text-align: left; padding: 2rem;">
+                <i class="fas fa-envelope" style="font-size: 2rem;"></i>
+                <h3>Email</h3>
+                <p>info@ubileynoe.ru<br>sales@ubileynoe.ru</p>
+              </div>
+            </div>
+            <div style="background: #f5e5d3; border-radius: 40px; padding: 2rem; margin-top: 2.5rem; text-align: center;">
+              <i class="fas fa-clock" style="font-size: 2.5rem; color: #8b4513; margin-bottom: 1rem;"></i>
+              <h3>Режим работы</h3>
+              <p>Пн–Пт: 9:00 – 18:00<br>Сб–Вс: выходной</p>
+            </div>
+          `
+        },
+        feedback: {
+          title: 'Обратная связь',
+          content: `
+            <h2 class="page-title">Обратная связь</h2>
+            <div class="form-container">
+              <p style="margin-bottom: 2rem; text-align: center;">Задайте вопрос или оставьте отзыв — мы обязательно ответим!</p>
+              <form id="feedbackForm">
+                <div class="form-group">
+                  <label for="name"><i class="fas fa-user"></i> Ваше имя</label>
+                  <input type="text" id="name" name="name" placeholder="Иван Петров" required>
+                </div>
+                <div class="form-group">
+                  <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                  <input type="email" id="email" name="email" placeholder="ivan@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label for="topic"><i class="fas fa-tag"></i> Тема обращения</label>
+                  <select id="topic" name="topic">
+                    <option value="question">Вопрос о продукции</option>
+                    <option value="order">Заказ / сотрудничество</option>
+                    <option value="complaint">Жалоба или предложение</option>
+                    <option value="other">Другое</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="message"><i class="fas fa-comment"></i> Сообщение</label>
+                  <textarea id="message" name="message" placeholder="Напишите ваше сообщение..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-submit"><i class="fas fa-paper-plane"></i> Отправить</button>
+                <div class="success-message" id="successMessage">
+                  <i class="fas fa-check-circle"></i> Спасибо! Ваше сообщение отправлено. Мы свяжемся с вами в ближайшее время.
+                </div>
+              </form>
+            </div>
+          `
+        }
+      };
+
+      const app = document.getElementById('app');
+      const navLinks = document.querySelectorAll('nav a');
+
+      // Функция рендера страницы
+      function renderPage(pageKey) {
+        const page = pages[pageKey];
+        if (!page) return;
+
+        app.innerHTML = page.content;
+        document.title = `Завод «Юбилейное» — ${page.title}`;
+
+        // Обновляем активную ссылку
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.dataset.page === pageKey) {
+            link.classList.add('active');
+          }
+        });
+
+        // Навешиваем обработчики на кнопки внутри контента, которые меняют страницу
+        app.querySelectorAll('[data-page]').forEach(el => {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetPage = el.dataset.page;
+            if (targetPage && pages[targetPage]) {
+              renderPage(targetPage);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          });
+        });
+
+        // Если это страница обратной связи, инициализируем форму
+        if (pageKey === 'feedback') {
+          initFeedbackForm();
+        }
+      }
+
+      // Инициализация формы обратной связи
+      function initFeedbackForm() {
+        const form = document.getElementById('feedbackForm');
+        if (!form) return;
+
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          // Простая валидация
+          const name = document.getElementById('name').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const message = document.getElementById('message').value.trim();
+
+          if (!name || !email || !message) {
+            alert('Пожалуйста, заполните все обязательные поля.');
+            return;
+          }
+
+          if (!email.includes('@') || !email.includes('.')) {
+            alert('Введите корректный email.');
+            return;
+          }
+
+          // Показываем сообщение об успехе
+          const successMsg = document.getElementById('successMessage');
+          successMsg.style.display = 'block';
+
+          // Сброс формы
+          form.reset();
+
+          // Скрываем сообщение через 5 секунд
+          setTimeout(() => {
+            successMsg.style.display = 'none';
+          }, 5000);
+
+          // В реальном проекте здесь был бы AJAX-запрос
+        });
+      }
+
+      // Навигация по кликам в меню
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const pageKey = link.dataset.page;
+          if (pageKey && pages[pageKey]) {
+            renderPage(pageKey);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Загружаем главную страницу по умолчанию
+      renderPage('home');
+    })();
+  </script>
+</body>
+</html>
